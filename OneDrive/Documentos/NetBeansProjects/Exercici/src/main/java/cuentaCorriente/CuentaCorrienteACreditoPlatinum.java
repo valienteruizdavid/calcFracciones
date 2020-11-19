@@ -14,27 +14,28 @@ import java.util.logging.Logger;
  */
 public class CuentaCorrienteACreditoPlatinum extends CuentaCorrienteACredito {
     
+    
     public CuentaCorrienteACreditoPlatinum(String titular, double saldo) {
         super(titular, saldo);
     }
 
     @Override
     public void abona(double abono) {
-        if(abono < 0){
+        if(abono <= 0){
             try {
                throw new CuentaException(2); 
             } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteACreditoGold.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.MissatgeError());
             }
         }
         
-        if(getSaldo()+5_000 >= abono){
-            setSaldo(getSaldo() - abono);
+        if(saldo+5_000 >= abono){
+            saldo-=abono;
         } else{
             try{
                 throw new CuentaException(4);
             } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteACreditoGold.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.MissatgeError());
             }
         }
     }

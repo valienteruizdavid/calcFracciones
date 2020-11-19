@@ -18,42 +18,72 @@ import static org.junit.Assert.*;
  */
 public class CuentaCorrienteADebitoTest {
     
+    private CuentaCorritenteImpl cc;
+    
     public CuentaCorrienteADebitoTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        System.out.println("Iniciando test");
     }
     
     @AfterClass
     public static void tearDownClass() {
+        System.out.println("Acabando test");
     }
     
     @Before
     public void setUp() {
+       cc = new CuentaCorrienteADebito("Paco",4000);
     }
     
     @After
     public void tearDown() {
+        cc = null;
     }
 
     /**
      * Test of abona method, of class CuentaCorrienteADebito.
      */
-    @Test
-    public void testAbona() {
-        CuentaCorritenteImpl cc3 = new CuentaCorrienteADebito("Juana", 1500);
-       
-        cc3.abona(120);
-        assertEquals(1380, cc3.getSaldo(),0.0);     
+    
+    @Test //En el caso que el ingreso sea correcto.
+    public void testIngresaTrue() {
+        cc.ingresa(600);
+        assertEquals(4600, cc.getSaldo(),1.0E-3);   
+    }
+      
+    @Test (expected = AssertionError.class)//En el caso que el ingreso sea negativo.
+    public void testIngresaNegativo(){
+        cc.ingresa(-600);
+        assertEquals(4000, cc.getSaldo(),1.0E-3); 
     }
     
-    @Test
-    public void testAbona2() {
-        CuentaCorritenteImpl cc3 = new CuentaCorrienteADebito("Juana", -1500);
-       
-        cc3.abona(-120);
-        assertEquals(-120, cc3.getSaldo(),0.0);     
+    
+    @Test //En el caso que la resta del abono sea correcto.
+    public void testAbonaTrue() {     
+        cc.abona(2300);
+        assertEquals(1700, cc.getSaldo(),1.0E-3);     
     }
+    
+    @Test //En el caso de que la resta del abono sea incorrecto.
+    public void testAbonaFalse() {
+        cc.abona(2300);
+        assertEquals(4000, cc.getSaldo(),1.0E-3);   
+    }
+    
+    
+    @Test (expected = AssertionError.class) //En el caso de que el abono sea un valor negativo.
+    public void testAbonaCero() {
+       cc.abona(0);
+       assertEquals(4000,cc.getSaldo(),1-0E-3);
+    }
+    
+    @Test (expected = AssertionError.class) //En el caso de que la resta del abono sea mayor al ingreso.
+    public void testAbonaMax() {
+        cc.abona(4001);
+        assertEquals(4000, cc.getSaldo(),1.0E-3);   
+    }
+    
     
 }

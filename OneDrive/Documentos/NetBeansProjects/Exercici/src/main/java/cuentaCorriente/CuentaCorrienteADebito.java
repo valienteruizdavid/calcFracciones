@@ -15,21 +15,22 @@ public class CuentaCorrienteADebito extends CuentaCorritenteImpl {
     
     @Override
     public void abona(double abono) {
-        if(abono < 0){
-            try{
-                throw new CuentaException(1);
-            } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteADebito.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
         
-        if(getSaldo() >= abono){
-            setSaldo(getSaldo()-abono);
+            try{
+                if(abono <= 0){
+                throw new CuentaException(2);
+                }
+            }catch (CuentaException ex) {
+                System.out.println(ex.MissatgeError());
+            }
+        
+        if(saldo >= abono){
+           saldo-=abono;
         } else{
             try{
                 throw new CuentaException(5);
             } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteADebito.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.MissatgeError());
             }
         }
     }

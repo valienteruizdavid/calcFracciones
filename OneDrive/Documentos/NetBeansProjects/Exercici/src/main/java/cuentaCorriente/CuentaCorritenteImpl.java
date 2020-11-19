@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public abstract class CuentaCorritenteImpl implements CuentaCorriente {
     
     private String titular;
-    private double saldo;
+    protected double saldo;
 
     public CuentaCorritenteImpl(String titular, double saldo) {
         this.titular = titular;
@@ -49,14 +49,27 @@ public abstract class CuentaCorritenteImpl implements CuentaCorriente {
         if(ingreso <= 0){
             try{
                 throw new CuentaException(1);
-            } catch (Exception ex) {
-                Logger.getLogger(CuentaCorritenteImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CuentaException ex) {
+                System.out.println(ex.MissatgeError());
             }
         }
-        else if(ingreso > 0){
-            saldo += ingreso;
-        }
+        else saldo += ingreso;
+        
     }
+
+    @Override
+    public void abona(double abono) {
+        if(abono <= 0){
+            try{
+                throw new CuentaException(2);
+            } catch (CuentaException ex) {
+                System.out.println(ex.MissatgeError());
+            }
+        }
+        else saldo += abono;
+    }
+    
+    
     
     
     

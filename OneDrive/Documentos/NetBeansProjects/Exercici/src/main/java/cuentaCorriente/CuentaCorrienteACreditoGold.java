@@ -25,17 +25,17 @@ public class CuentaCorrienteACreditoGold extends CuentaCorrienteACredito{
             try {
                throw new CuentaException(2); 
             } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteACreditoGold.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.MissatgeError());
             }
         }
         
-        if(getSaldo()+3_000 >= abono){
-            setSaldo(getSaldo() - abono);
+        if(saldo+3_000 >= abono){
+            saldo-=abono;
         } else{
             try{
                 throw new CuentaException(3);
             } catch (CuentaException ex) {
-                Logger.getLogger(CuentaCorrienteACreditoGold.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex.MissatgeError());
             }
         }
         
